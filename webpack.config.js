@@ -21,7 +21,7 @@ module.exports = (env)=> {
 
 	let newConfig = {
 		entry:{
-			index:'./light-vue/example.js'
+			index:'./example.js'
 		}
 		,output:Object.assign({
 			filename:+env.production||+env.md5 ? '[name].[chunkhash].js' : '[name].js',
@@ -110,7 +110,7 @@ module.exports = (env)=> {
 
 let htmlHelper = (htmlConfig)=>{
 	return new HtmlWebpackPlugin({
-		template:'./vueTest/index.html'
+		template:'./index.html'
 		,filename:'index.html'
 		,chunks:['index', 'vendor', 'manifest']
 		// ,minify:true

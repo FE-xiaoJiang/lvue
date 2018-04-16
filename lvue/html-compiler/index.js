@@ -62,7 +62,9 @@ class Compiler {
 				}
 			},
 			chars: (text) => {
-				console.log('chars:',parseText(text));
+				const result = parseText(text);
+				text = result ? result : text;
+				console.log('chars:',text);
 				currentParent.children.push(text);
 			}
 		});

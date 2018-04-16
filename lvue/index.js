@@ -9,7 +9,7 @@ import LVueComponent from './component';
 //生命周期
 const lifeEnum = ['beforeCreate', 'created'];
 
-class LVue {
+export default class LVue {
 	/**
 	 * 初始化组件
 	 * @param  {[type]} options [description]
@@ -25,4 +25,3 @@ class LVue {
 
 }
 
-module.exports = LVue;

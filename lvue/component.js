@@ -27,7 +27,7 @@ const LIFECYCLEHOOKS = [
 	'errorCaptured'
 ];
 
-class LVueComponent {
+export default class LVueComponent {
 
 	/**
 	 * 初始化组件
@@ -62,7 +62,8 @@ class LVueComponent {
 		vm.$root = this.compileHtml(vm);
 		this.iterateAnalysisComps(vm);
 		this.initWatchData(vm);
-		this.render(vm);
+		this.genCode(vm);
+		this.$forceUpdate(vm);
 		// document.querySelector(el).innerHTML = (template);
 	}
 	compileHtml(vm) {
@@ -95,6 +96,8 @@ class LVueComponent {
 		let data = this.data;
 		for (const key in data) {
 			Object.defineProperty(this, key, {
+				enumerable: true,
+				configurable: true,
 				get() {
 					return data[key];
 				},
@@ -107,10 +110,19 @@ class LVueComponent {
 			this.dataGetSetter[key] = data[key];
 		}
 	}
-	render(vm) {
+	render() {
+
+	}
+	genCode(vm) {
 		let { $root } = vm;
-		let ele = nodeOps.createElements($root);
-		console.log('render:', ele);
+		let _render = nodeOps.createElements($root);
+		vm._renderFn = new Function(`with(this) {console.log('********:', name);return ${_render}; }`);
+		console.log('render:', vm._renderFn);
+	}
+	$forceUpdate(vm) {
+		let scope = Object.assign(vm, nodeOps);
+		let ele = vm._renderFn.call(scope);
+		console.log('update ele:', ele,' ****scope:', scope);
 	}
 	initWatchData(vm) {
 		this._watcher = new Watcher(vm, this.render, {
@@ -134,4 +146,3 @@ class LVueComponent {
 
 }
 
-module.exports = LVueComponent;

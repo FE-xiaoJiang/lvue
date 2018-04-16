@@ -36,6 +36,7 @@ export function removeChild (node, child) {
 
 export function appendChild (node, child) {
   node.appendChild(child)
+  return node;
 }
 
 export function parentNode (node) {
@@ -54,6 +55,10 @@ export function setTextContent (node, text) {
   node.textContent = text
 }
 
+export function _s(text) {
+  return text;
+}
+
 export function setStyleScope (node, scopeId) {
   node.setAttribute(scopeId, '')
 }
@@ -61,17 +66,19 @@ export function setStyleScope (node, scopeId) {
 export function createElements (vnode) {
   let elm = null;
   if (typeof vnode == 'string') {
-    elm = createTextNode(vnode);
+    elm = `createTextNode("${vnode}")`;
+  } else if (!vnode.tag) {
+    elm = `createTextNode(${vnode.expression})`;
   } else if (vnode.unary || !vnode.children.length) {//一元标签或者子元素为空
-    elm = createElement(vnode.tag);
+    elm = `createElement("${vnode.tag}")`;
     // return elm;
   } else {
-    elm = createElement(vnode.tag);
+    elm = `createElement("${vnode.tag}")`;
     for(let i = 0; i < vnode.children.length; i++) {
       if (!vnode.children[i]) {
         continue;
       }
-      appendChild(elm, createElements(vnode.children[i]));
+      elm = `appendChild(${elm}, ${createElements(vnode.children[i])})`;
     }
   }
   return elm;
