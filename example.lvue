@@ -1,0 +1,14 @@
+<template>
+	<div>
+		我的名字:{{name}}
+	</div>
+</template>
+<script >
+	export default {
+		data() {
+			return {
+				name: 'myvue'
+			};
+		}
+	}
+</script>
