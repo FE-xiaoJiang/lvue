@@ -7,6 +7,8 @@
 import HTMLCompiler from './html-compiler';
 import * as nodeOps from './run-time/node-ops';
 import Watcher from './observer/watcher';
+import { camelize, capitalize } from './shared/util';
+import { isHTMLTag } from './web/util/element';
 
 //未初始化生命周期
 const lifeCycleBeforeInitHook = ['beforeCreate', 'created', 'beforeMount', 'render', 'mounted'];
@@ -44,7 +46,7 @@ export default class LVueComponent {
 	init(options) {
 		const vm = this;
 		vm.$options = options;
-		vm.children = [];
+		vm.children = new Map();
 		let { data, el, template, components } = options;
 		if (typeof data === 'function') {
 			this.data = data();
@@ -113,9 +115,30 @@ export default class LVueComponent {
 	render() {
 
 	}
+
+	createElements (vnode) {
+	  let elm = null;
+	  if (typeof vnode == 'string') {
+	    elm = `createTextNode("${vnode}")`;
+	  } else if (!vnode.tag) {
+	    elm = `createTextNode(${vnode.expression})`;
+	  } else if (vnode.unary || !vnode.children.length) {//一元标签或者子元素为空
+	    elm = `createElement("${vnode.tag}")`;
+	    // return elm;
+	  } else {
+	    elm = `createElement("${vnode.tag}")`;
+	    for(let i = 0; i < vnode.children.length; i++) {
+	      if (!vnode.children[i]) {
+	        continue;
+	      }
+	      elm = `appendChild(${elm}, ${this.createElements(vnode.children[i])})`;
+	    }
+	  }
+	  return elm;
+	}
 	genCode(vm) {
 		let { $root } = vm;
-		let _render = nodeOps.createElements($root);
+		let _render = this.createElements($root);
 		vm._renderFn = new Function(`with(this) {console.log('********:', name);return ${_render}; }`);
 		console.log('render:', vm._renderFn);
 	}
@@ -140,7 +163,7 @@ export default class LVueComponent {
 	iterateAnalysisComps(vm) {
 		const { components } = vm.$options;
 		for (const name in components) {
-			vm.children.push(new LVueComponent(components[name]));
+			vm.children.set(name, new LVueComponent(components[name]));
 		}
 	}
 

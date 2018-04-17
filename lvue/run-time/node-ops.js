@@ -63,27 +63,6 @@ export function setStyleScope (node, scopeId) {
   node.setAttribute(scopeId, '')
 }
 
-export function createElements (vnode) {
-  let elm = null;
-  if (typeof vnode == 'string') {
-    elm = `createTextNode("${vnode}")`;
-  } else if (!vnode.tag) {
-    elm = `createTextNode(${vnode.expression})`;
-  } else if (vnode.unary || !vnode.children.length) {//一元标签或者子元素为空
-    elm = `createElement("${vnode.tag}")`;
-    // return elm;
-  } else {
-    elm = `createElement("${vnode.tag}")`;
-    for(let i = 0; i < vnode.children.length; i++) {
-      if (!vnode.children[i]) {
-        continue;
-      }
-      elm = `appendChild(${elm}, ${createElements(vnode.children[i])})`;
-    }
-  }
-  return elm;
-}
-
 // export function genCode(vnode) {
 //   let code = '';
 //   if (!vnode.unary || !vnode.children.length) {//一元标签或者自元素为空
