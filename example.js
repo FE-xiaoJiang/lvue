@@ -8,7 +8,7 @@ import TestComp from './components/testComp';
 
 new LVue({
 	el: '#app',
-	template: '<div><test-comp></test-comp><span class="myName" :name="name">name:{{name}}</span>6666666<aside>aside123</aside><input value="haha" type="text" /><div test=1><span>no:</span>123</div></div>',
+	template: '<div><test-comp/><span class="myName" :name="name">name:{{name}}</span>6666666<aside>aside123</aside><input value="haha" type="text" /><div test=1><span>no:</span>123</div></div>',
 	data() {
 		return {
 			name: 'me, LVue'

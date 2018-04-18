@@ -145,6 +145,8 @@ export default class LVueComponent {
 	$forceUpdate(vm) {
 		let scope = Object.assign(vm, nodeOps);
 		let ele = vm._renderFn.call(scope);
+		document.body.appendChild(ele);
+		document.body.appendChild(nodeOps.createElement('br'));
 		console.log('update ele:', ele,' ****scope:', scope);
 	}
 	initWatchData(vm) {
