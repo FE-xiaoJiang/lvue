@@ -50,11 +50,11 @@ module.exports = (env)=> {
 						fallback: "style-loader"
 					})
 				}
-				// ,{
-				// 	test:/\.vue$/,
-				// 	exclude:/(node_modules)/,
-				// 	loader: 'vue-loader'
-				// }
+				,{
+					test:/\.lvue$/,
+					exclude:/(node_modules)/,
+					loader: 'vue-loader'
+				}
 				,{
 					test:/\.js$/,
 					exclude:/(node_modules)/,

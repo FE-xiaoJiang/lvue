@@ -19,7 +19,7 @@ export default {
 	 * 众生命周期函数
 	 * @return {[type]} [description]
 	 */
-	beforeCreated() {
+	beforeCreate() {
 		this.name = 'me, test component ...';
 	},
 	created() {

@@ -168,7 +168,7 @@ export var capitalize = cached(function (str) {
  * Hyphenate a camelCase string.
  */
 var hyphenateRE = /\B([A-Z])/g;
-var hyphenate = cached(function (str) {
+export var hyphenate = cached(function (str) {
   return str.replace(hyphenateRE, '-$1').toLowerCase()
 });
 
@@ -244,7 +244,7 @@ function toObject (arr) {
  * Stubbing args to make Flow happy without leaving useless transpiled code
  * with ...rest (https://flow.org/blog/2017/05/07/Strict-Function-Call-Arity/)
  */
-function noop (a, b, c) {}
+export function noop (a, b, c) {}
 
 /**
  * Always return false.

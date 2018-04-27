@@ -1,5 +1,6 @@
 import { parseHTML } from './html-parser';
 import { parseText } from './text-parser';
+import { processAttrs } from './process';
 
 let stack = []; //非unary标签的数组栈
 let currentParent = null;
@@ -44,6 +45,7 @@ class Compiler {
 					currentParent = ele;
 					stack.push(ele);
 				}
+				processAttrs(ele);
 			},
 			end: (tag, start, end) => {
 				console.log('end: ', tag, start, end);

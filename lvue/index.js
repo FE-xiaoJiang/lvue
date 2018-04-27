@@ -4,24 +4,7 @@
  * 
  */
 
-import LVueComponent from './component';
+import LVue from './core';
 
-//生命周期
-const lifeEnum = ['beforeCreate', 'created'];
-
-export default class LVue {
-	/**
-	 * 初始化组件
-	 * @param  {[type]} options [description]
-	 * @param  {[type]} type    类型，根组件or普通组件
-	 * @return {[type]}         [description]
-	 */
-	constructor(options, type) {
-		this.rootComp = new LVueComponent(options, 'root');
-		console.log(this.rootComp);
-	}
-
-
-
-}
+export default LVue;
 
